@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# PyInstaller build artifacts (LARGE FILES - NEVER UPLOAD)
+build/
+dist/
+*.spec
+*.exe
+*.msi
+*.dmg
+*.pkg
+*.app
+*.deb
+*.rpm
+
+# Large archives (can be regenerated)
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# Node.js (for web panel)
+web-panel/node_modules/
+web-panel/dist/
+web-panel/.env
+web-panel/.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Logs
+*.log
+logs/
+
+# Output files
+output/
+generated/
+temp/
+tmp/
+
+# AutoCAD specific
+*.dwg~
+*.bak
+*.sv$
+
+# Configuration (keep templates, ignore user configs)
+config/user_*.yaml
+config/local_*.yaml
