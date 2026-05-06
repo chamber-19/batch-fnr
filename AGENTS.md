@@ -34,10 +34,8 @@ web stack. All of it is gone, on purpose:
 - **`V1.5/` (PySide6 rewrite that was never finished)** — retired; every
   endpoint returned mock data
 - **PySide6 / Tkinter / any Python GUI** — retired
-
-The only surviving Python is `BatchFindAndReplaceV1/`, kept solely as the
-historical reference for the entity-traversal logic that the new .NET
-sidecar reimplements. It is not invoked, packaged, or tested.
+- **`BatchFindAndReplaceV1/`** — deleted; do not recreate it. The V1 logic
+  was rewritten in `processor/BatchFnr/` as a .NET 8 headless sidecar.
 
 ## Forbidden
 
