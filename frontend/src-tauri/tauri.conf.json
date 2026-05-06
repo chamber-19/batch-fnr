@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Batch Find & Replace",
+  "version": "2.0.0",
+  "identifier": "com.chamber19.batch-fnr",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Batch Find & Replace",
+        "width": 1200,
+        "height": 760,
+        "minWidth": 900,
+        "minHeight": 600,
+        "fileDropEnabled": true,
+        "decorations": true,
+        "transparent": false,
+        "backgroundColor": "#1C1B19"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/icon.ico"
+    ],
+    "resources": [
+      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.exe",
+      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.dll",
+      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.runtimeconfig.json",
+      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.deps.json"
+    ]
+  }
+}

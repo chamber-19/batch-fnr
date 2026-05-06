@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/ipc.ts","./src/main.tsx","./src/types.ts","./src/components/FileList.tsx","./src/components/PairTable.tsx","./src/components/PreviewTable.tsx","./src/components/ProgressBar.tsx","./src/components/ResultsSummary.tsx"],"version":"5.9.3"}

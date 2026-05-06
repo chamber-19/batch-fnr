@@ -1,43 +1,18 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-*.so
-.pytest_cache/
-.coverage
+# Node.js
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
 
-# Virtual environments
-venv/
-env/
-ENV/
+# Rust / Tauri
+frontend/src-tauri/target/
+frontend/src-tauri/gen/
 
-# PyInstaller build artifacts (LARGE FILES - NEVER UPLOAD)
-build/
-dist/
-*.spec
-*.exe
-*.msi
-*.dmg
-*.pkg
-*.app
-*.deb
-*.rpm
+# .NET
+processor/**/bin/
+processor/**/obj/
+*.user
 
-# Large archives (can be regenerated)
-*.zip
-*.tar.gz
-*.7z
-*.rar
-
-# Node.js (for web panel)
-web-panel/node_modules/
-web-panel/dist/
-web-panel/.env
-web-panel/.env.local
-
-# IDE
+# Editors
 .vscode/
 .idea/
 *.swp
@@ -52,17 +27,7 @@ Thumbs.db
 *.log
 logs/
 
-# Output files
-output/
-generated/
-temp/
-tmp/
-
-# AutoCAD specific
+# AutoCAD detritus
 *.dwg~
 *.bak
 *.sv$
-
-# Configuration (keep templates, ignore user configs)
-config/user_*.yaml
-config/local_*.yaml

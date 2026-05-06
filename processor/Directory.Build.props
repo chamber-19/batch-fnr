@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Path to a local AutoCAD install that ships accoremgd.dll and acdbmgd.dll.
+      Override at build time:  dotnet build -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
+      The Autodesk references are marked Private=False so they are NOT copied to
+      the output directory; doing so causes assembly version conflicts at runtime.
+    -->
+    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
+  </PropertyGroup>
+</Project>
