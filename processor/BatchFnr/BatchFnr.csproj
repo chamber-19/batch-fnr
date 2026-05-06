@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>BatchFnr</RootNamespace>
+    <AssemblyName>BatchFnr</AssemblyName>
+    <PlatformTarget>x64</PlatformTarget>
+    <!-- Sidecar must run on the same CLR as AutoCAD; do not self-contain. -->
+    <SelfContained>false</SelfContained>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Private=False is mandatory. accoremgd/acdbmgd ship with AutoCAD; copying
+      them to our output directory triggers "mixed-mode assembly" / version
+      conflicts the moment AutoCAD's own copies load alongside ours.
+    -->
+    <Reference Include="accoremgd">
+      <HintPath>$(AcadDir)\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>$(AcadDir)\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
