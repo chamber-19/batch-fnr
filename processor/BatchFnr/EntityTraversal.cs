@@ -94,8 +94,8 @@ public static class EntityTraversal
     public static string? ReadVisibleText(Entity entity) => entity switch
     {
         MText mt => MTextStripper.Strip(mt.Contents ?? string.Empty),
-        DBText t => t.TextString ?? string.Empty,
         AttributeReference a => a.TextString ?? string.Empty,
+        DBText t => t.TextString ?? string.Empty,
         Dimension d => HasOverrideText(d) ? d.DimensionText : null,
         _ => null,
     };
@@ -106,8 +106,8 @@ public static class EntityTraversal
     public static string TypeLabel(Entity entity) => entity switch
     {
         MText => "MText",
-        DBText => "DBText",
         AttributeReference => "AttributeReference",
+        DBText => "DBText",
         Dimension => "Dimension",
         _ => entity.GetType().Name,
     };

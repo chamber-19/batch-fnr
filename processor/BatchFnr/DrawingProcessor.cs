@@ -93,17 +93,6 @@ public static class DrawingProcessor
             case MText mt:
                 return TryApplyMText(mt, pairs);
 
-            case DBText t:
-            {
-                string current = t.TextString ?? string.Empty;
-                string proposed = ReplacementEngine.Apply(current, pairs);
-                if (proposed == current)
-                    return false;
-                t.UpgradeOpen();
-                t.TextString = proposed;
-                return true;
-            }
-
             case AttributeReference a:
             {
                 string current = a.TextString ?? string.Empty;
@@ -112,6 +101,17 @@ public static class DrawingProcessor
                     return false;
                 a.UpgradeOpen();
                 a.TextString = proposed;
+                return true;
+            }
+
+            case DBText t:
+            {
+                string current = t.TextString ?? string.Empty;
+                string proposed = ReplacementEngine.Apply(current, pairs);
+                if (proposed == current)
+                    return false;
+                t.UpgradeOpen();
+                t.TextString = proposed;
                 return true;
             }
 
