@@ -19,6 +19,11 @@ return. If a request implies a side-feature, push back and confirm scope.
 
 ## .NET sidecar rules
 
+> **Before touching any AutoCAD entity code**, consult the authoritative
+> .NET patterns at
+> <https://github.com/chamber-19/autocad-knowledge> — specifically the
+> transaction model and the gotchas table.
+
 - Headless **only**: `using var db = new Database(false, true);` plus
   `db.ReadDwgFile(...)`. **No COM**, no `Application.DocumentManager`, no
   `pyautocad` / `win32com` / `pythoncom`.
