@@ -15,3 +15,8 @@ dist-ssr/
 
 # Dependencies
 node_modules/
+
+# TypeScript incremental build outputs
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts

@@ -49,16 +49,39 @@ export default function App() {
   // Subscribe to per-file progress events from the sidecar.
   useEffect(() => {
     if (!isTauri) return;
-    let unsub: (() => void) | undefined;
+    let unsubProgress: (() => void) | undefined;
+    let unsubDrop: (() => void) | undefined;
     onProgress((e) => {
       setProgress(e);
       setFileStatus((prev) => ({
         ...prev,
         [e.file]: "done",
       }));
-    }).then((u) => (unsub = u));
+    }).then((u) => (unsubProgress = u));
+
+    // Native Tauri file-drop. The browser HTML5 dnd path doesn't carry real
+    // paths from the OS; this event does.
+    import("@tauri-apps/api/webview").then(({ getCurrentWebview }) => {
+      getCurrentWebview()
+        .onDragDropEvent((event) => {
+          if (event.payload.type !== "drop") return;
+          const dropped = (event.payload.paths ?? []).filter((p) =>
+            p.toLowerCase().endsWith(".dwg"),
+          );
+          if (dropped.length === 0) return;
+          setFiles((prev) => {
+            const seen = new Set(prev);
+            const merged = [...prev];
+            for (const p of dropped) if (!seen.has(p)) merged.push(p);
+            return merged;
+          });
+        })
+        .then((u) => (unsubDrop = u));
+    });
+
     return () => {
-      unsub?.();
+      unsubProgress?.();
+      unsubDrop?.();
     };
   }, []);
 
@@ -204,6 +227,13 @@ export default function App() {
                 </h2>
               </div>
               <div className="panel-body">
+                {matches.length > 0 && (
+                  <div className="dim mono" style={{ marginBottom: 12 }}>
+                    Note: unchecking every row in a file excludes that file
+                    from execute. Within an included file, the sidecar
+                    re-applies all configured pairs.
+                  </div>
+                )}
                 {previewErrors.length > 0 && (
                   <div className="error-list">
                     <h3>Scan errors</h3>
