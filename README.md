@@ -9,7 +9,7 @@ preview every match, execute. Done.
 
 - **UI** — React 19 + Vite + TypeScript inside a Tauri 2.0 shell
   (`frontend/`)
-- **DWG processor** — .NET 8 console app using the headless AutoCAD
+- **DWG processor** — .NET 10 console app using the headless AutoCAD
   managed API (`processor/`), spawned by Tauri as a sidecar and driven over
   newline-delimited JSON on stdin/stdout
 - **No Docker, no localhost HTTP, no Python GUI, no COM**
@@ -21,7 +21,7 @@ of features that have been retired.
 
 Requires:
 
-- .NET 8 SDK and a local AutoCAD install (for `accoremgd.dll` /
+- .NET 10 SDK and a local AutoCAD install (for `accoremgd.dll` /
   `acdbmgd.dll`)
 - Rust 1.77+ and the platform Tauri prerequisites
 - Node 20+ and npm
@@ -66,7 +66,7 @@ frontend/                React 19 UI (Build → Preview → Results)
     tauri.conf.json
     Cargo.toml
 
-processor/               .NET 8 sidecar
+processor/               .NET 10 sidecar
   BatchFnr.sln
   Directory.Build.props  AcadDir override
   BatchFnr/

@@ -5,7 +5,8 @@
   "identifier": "com.chamber19.batch-fnr",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build && dotnet build ../processor/BatchFnr.sln -c Release",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420",
     "frontendDist": "../dist"
   },
   "app": {
@@ -34,7 +35,10 @@
       "icons/icon.ico"
     ],
     "resources": [
-      "../../processor/BatchFnr/bin/Release/net8.0-windows/"
+      "../../processor/BatchFnr/bin/x64/Release/net10.0-windows/BatchFnr.exe",
+      "../../processor/BatchFnr/bin/x64/Release/net10.0-windows/BatchFnr.dll",
+      "../../processor/BatchFnr/bin/x64/Release/net10.0-windows/BatchFnr.runtimeconfig.json",
+      "../../processor/BatchFnr/bin/x64/Release/net10.0-windows/BatchFnr.deps.json"
     ]
   }
 }
