@@ -14,9 +14,10 @@
 
   <ItemGroup>
     <!--
-      Private=False is mandatory. accoremgd/acdbmgd ship with AutoCAD; copying
+      Private=False is mandatory. These assemblies ship with AutoCAD; copying
       them to our output directory triggers "mixed-mode assembly" / version
       conflicts the moment AutoCAD's own copies load alongside ours.
+      AcadDir is resolved by the version detection ladder in Directory.Build.props.
     -->
     <Reference Include="accoremgd">
       <HintPath>$(AcadDir)\accoremgd.dll</HintPath>
@@ -24,6 +25,13 @@
     </Reference>
     <Reference Include="acdbmgd">
       <HintPath>$(AcadDir)\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <!-- acmgd provides higher-level AutoCAD managed types (e.g. Application,
+           Editor). Included here with Private=False to match the reference
+           pattern and avoid version conflicts if downstream code ever needs it. -->
+      <HintPath>$(AcadDir)\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
