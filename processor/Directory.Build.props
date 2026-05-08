@@ -1,11 +1,25 @@
 <Project>
   <PropertyGroup>
     <!--
-      Path to a local AutoCAD install that ships accoremgd.dll and acdbmgd.dll.
-      Override at build time:  dotnet build -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
+      Preferred AutoCAD version. Override with -p:AutoCadVersion=2025 etc.
+      When AcadDir is not set explicitly, the detection ladder tries this
+      version first before falling back through 2027 → 2026 → 2025.
+    -->
+    <AutoCadVersion Condition="'$(AutoCadVersion)' == ''">2027</AutoCadVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      Auto-detect AcadDir: try the preferred version first, then fall back
+      newest-to-oldest. The first directory that exists wins.
+      Override entirely at build time:
+        dotnet build -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
       The Autodesk references are marked Private=False so they are NOT copied to
       the output directory; doing so causes assembly version conflicts at runtime.
     -->
-    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD $(AutoCadVersion)')">C:\Program Files\Autodesk\AutoCAD $(AutoCadVersion)</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD 2027')">C:\Program Files\Autodesk\AutoCAD 2027</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD 2026')">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2025</AcadDir>
   </PropertyGroup>
 </Project>

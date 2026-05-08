@@ -40,10 +40,15 @@ npm run tauri dev
 npm run tauri build
 ```
 
-If your AutoCAD lives somewhere other than the default
-`C:\Program Files\Autodesk\AutoCAD 2026`, point the build at it:
+If your AutoCAD lives somewhere other than the default, the build auto-detects
+the installed version by walking the ladder 2027 → 2026 → 2025. You can also
+override explicitly:
 
 ```bash
+# Pin to a specific version
+dotnet build processor/BatchFnr.sln -p:AutoCadVersion=2025
+
+# Or point directly at any install directory
 dotnet build processor/BatchFnr.sln -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
 ```
 

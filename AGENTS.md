@@ -50,8 +50,9 @@ Do not, under any circumstances:
 - Add a localhost HTTP server, REST API, or WebSocket between the UI and
   the backend. Use Tauri IPC only.
 - Copy the Autodesk reference assemblies into the build output. The
-  `<Private>False</Private>` setting on every `accoremgd` / `acdbmgd`
-  reference is mandatory; copying them produces runtime version conflicts.
+  `<Private>False</Private>` setting on every `accoremgd` / `acdbmgd` /
+  `acmgd` reference is mandatory; copying them produces runtime version
+  conflicts.
 
 ## Tauri 2.0 conventions
 
@@ -69,8 +70,9 @@ Do not, under any circumstances:
 Run all three before merging non-trivial changes:
 
 ```bash
-# .NET sidecar (requires AutoCAD installed locally so accoremgd/acdbmgd resolve;
-# override path with -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025")
+# .NET sidecar (requires AutoCAD installed locally so accoremgd/acdbmgd resolve).
+# Auto-detects installed version 2027 → 2026 → 2025; override if needed:
+#   -p:AutoCadVersion=2025  or  -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
 dotnet build processor/BatchFnr.sln
 
 # Tauri shell
