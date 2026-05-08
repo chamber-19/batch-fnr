@@ -85,7 +85,31 @@ fn sidecar_path(app: &AppHandle) -> Result<PathBuf, String> {
 
 fn spawn_sidecar(app: &AppHandle) -> Result<Child, String> {
     let exe = sidecar_path(app)?;
+
+    // Prepend known AutoCAD installation directories to the child process's
+    // PATH so that acdbmgd.dll can resolve its native dependency chain the
+    // moment the .NET CLR loads it — before any SetDllDirectory call inside
+    // the sidecar has a chance to run.
+    let acad_candidates = [
+        r"C:\Program Files\Autodesk\AutoCAD 2027",
+        r"C:\Program Files\Autodesk\AutoCAD 2026",
+        r"C:\Program Files\Autodesk\AutoCAD 2025",
+    ];
+    let existing_path = std::env::var("PATH").unwrap_or_default();
+    let extra: String = acad_candidates
+        .iter()
+        .filter(|p| std::path::Path::new(p).exists())
+        .cloned()
+        .collect::<Vec<_>>()
+        .join(";");
+    let new_path = if extra.is_empty() {
+        existing_path
+    } else {
+        format!("{extra};{existing_path}")
+    };
+
     Command::new(&exe)
+        .env("PATH", new_path)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
