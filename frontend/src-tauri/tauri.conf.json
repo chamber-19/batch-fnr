@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Batch Find & Replace",
+        "title": "Batch Find and Replace",
         "width": 1200,
         "height": 760,
         "minWidth": 900,
