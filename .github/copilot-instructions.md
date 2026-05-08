@@ -19,10 +19,15 @@ return. If a request implies a side-feature, push back and confirm scope.
 
 ## .NET sidecar rules
 
-> **Before touching any AutoCAD entity code**, consult the authoritative
-> .NET patterns at
-> <https://github.com/chamber-19/autocad-knowledge> — specifically the
-> transaction model and the gotchas table.
+> **Before touching any AutoCAD entity code**, read the relevant files in
+> the `autocad-knowledge` repo — it is the authoritative reference for all
+> .NET patterns used in this sidecar:
+> - `headless-processing.md` — the exact pattern this sidecar follows (`Database(false, true)` + `ReadDwgFile`)
+> - `transaction-model.md` — foundation for all entity reads/writes
+> - `attributes.md` — block attribute read/write (for any future attribute work)
+> - `electrical-engineering.md` — R3P batch scanning patterns, MText caveats, layer conventions
+> - `gotchas.md` — 23 known failure modes; check here before opening a bug report
+> - `limitations/block-attributes-not-queryable.md` — the architectural reason this tool exists (Autodesk Assistant cannot read attributes)
 
 - Headless **only**: `using var db = new Database(false, true);` plus
   `db.ReadDwgFile(...)`. **No COM**, no `Application.DocumentManager`, no
