@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Batch Find & Replace",
+  "productName": "Batch Find and Replace",
   "version": "2.0.0",
   "identifier": "com.chamber19.batch-fnr",
   "build": {
