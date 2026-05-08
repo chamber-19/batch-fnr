@@ -10,6 +10,30 @@ namespace BatchFnr;
 /// </summary>
 public static class Program
 {
+    /// <summary>
+    /// Registered before <see cref="Main"/> runs so that any AutoCAD managed
+    /// assembly (acdbmgd, accoremgd, acmgd …) can be resolved from the
+    /// AutoCAD installation directory. Tauri spawns the sidecar from the
+    /// app resource directory, which is not on PATH, so the default probing
+    /// logic would otherwise fail to find these DLLs.
+    /// </summary>
+    static Program()
+    {
+        AppDomain.CurrentDomain.AssemblyResolve += static (_, args) =>
+        {
+            var simpleName = new AssemblyName(args.Name).Name;
+            if (simpleName is null)
+                return null;
+
+            // Pinned to AutoCAD 2027. Override AcadDir env var to redirect.
+            var acadDir = Environment.GetEnvironmentVariable("ACAD_DIR")
+                ?? @"C:\Program Files\Autodesk\AutoCAD 2027";
+
+            var dll = Path.Combine(acadDir, simpleName + ".dll");
+            return File.Exists(dll) ? Assembly.LoadFrom(dll) : null;
+        };
+    }
+
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,

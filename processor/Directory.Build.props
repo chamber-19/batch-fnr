@@ -10,10 +10,8 @@
 
   <PropertyGroup>
     <!--
-      Auto-detect AcadDir: try the preferred version first, then fall back
-      newest-to-oldest. The first directory that exists wins.
-      Override entirely at build time:
-        dotnet build -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
+      AcadDir is pinned to AutoCAD 2027. Override at build time if needed:
+        dotnet build -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2028"
       The Autodesk references are marked Private=False so they are NOT copied to
       the output directory; doing so causes assembly version conflicts at runtime.
     -->
