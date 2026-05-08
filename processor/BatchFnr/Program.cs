@@ -25,7 +25,8 @@ public static class Program
         {
             Console.Error.WriteLine("ERROR: No supported AutoCAD installation found.");
             Console.Error.WriteLine("BatchFnr requires AutoCAD 2025, 2026, or 2027.");
-            Console.Error.WriteLine(@"Searched: C:\Program Files\Autodesk\AutoCAD <year>\");
+            Console.Error.WriteLine(
+                @"Searched: C:\Program Files\Autodesk\AutoCAD 2027\, C:\Program Files\Autodesk\AutoCAD 2026\, C:\Program Files\Autodesk\AutoCAD 2025\");
             return 2;
         }
         Console.Error.WriteLine($"BatchFnr resolved AutoCAD install: {acadDir}");
@@ -178,7 +179,8 @@ internal static class AutoCadAssemblyResolver
 
         if (!SetDllDirectory(_resolvedAcadDir))
         {
-            Console.Error.WriteLine($"WARN: SetDllDirectory failed for '{_resolvedAcadDir}' (Win32={Marshal.GetLastWin32Error()}).");
+            Console.Error.WriteLine(
+                $"WARN: SetDllDirectory failed for '{_resolvedAcadDir}' (Win32={Marshal.GetLastWin32Error()}). Native AutoCAD dependencies may fail to load.");
         }
         AppDomain.CurrentDomain.AssemblyResolve += ResolveManagedAssembly;
         return _resolvedAcadDir;
