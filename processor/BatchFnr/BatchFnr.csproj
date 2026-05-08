@@ -10,6 +10,14 @@
     <!-- Sidecar must run on the same CLR as AutoCAD; do not self-contain. -->
     <SelfContained>false</SelfContained>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <!--
+      AutoCAD 2026's managed DLLs reference newer BCL versions (Microsoft.VisualBasic
+      10.1.0.0, System.Drawing 8.0.0.0, WindowsBase 8.0.0.0) than the net8.0 reference
+      assemblies advertise. The CLR resolves them correctly at runtime via the .NET 8
+      shared framework, so the MSB3277 conflicts are noise. Downgrade to a build
+      message here so real regressions stay visible.
+    -->
+    <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);MSB3277</MSBuildWarningsAsMessages>
   </PropertyGroup>
 
   <ItemGroup>

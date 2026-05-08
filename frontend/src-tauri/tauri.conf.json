@@ -1,12 +1,11 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Batch Find & Replace",
+  "productName": "Batch Find and Replace",
   "version": "2.0.0",
   "identifier": "com.chamber19.batch-fnr",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build",
-    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build && dotnet build ../processor/BatchFnr.sln -c Release",
     "frontendDist": "../dist"
   },
   "app": {
@@ -35,10 +34,7 @@
       "icons/icon.ico"
     ],
     "resources": [
-      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.exe",
-      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.dll",
-      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.runtimeconfig.json",
-      "../../processor/BatchFnr/bin/Release/net8.0-windows/BatchFnr.deps.json"
+      "../../processor/BatchFnr/bin/Release/net8.0-windows/"
     ]
   }
 }
