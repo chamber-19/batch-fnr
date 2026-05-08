@@ -10,7 +10,7 @@ frontend/                 React 19 + Vite + TypeScript inside a Tauri 2.0 shell
 ├── src/                  UI (Build → Preview → Results states)
 └── src-tauri/            Rust shell, IPC commands, sidecar lifecycle
 
-processor/                .NET 8 console app — the AutoCAD sidecar
+processor/                .NET 10 console app — the AutoCAD sidecar
 └── BatchFnr/             Headless Database (no COM, no AutoCAD UI)
 ```
 
@@ -35,7 +35,7 @@ web stack. All of it is gone, on purpose:
   endpoint returned mock data
 - **PySide6 / Tkinter / any Python GUI** — retired
 - **`BatchFindAndReplaceV1/`** — deleted; do not recreate it. The V1 logic
-  was rewritten in `processor/BatchFnr/` as a .NET 8 headless sidecar.
+  was rewritten in `processor/BatchFnr/` as a .NET 10 headless sidecar.
 
 ## Forbidden
 

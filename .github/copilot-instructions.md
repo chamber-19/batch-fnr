@@ -7,7 +7,7 @@ replace text inside AutoCAD DWG files. The app has three layers:
 
 1. **React 19 + TypeScript** UI in `frontend/src/`
 2. **Rust / Tauri 2.0** shell in `frontend/src-tauri/` (IPC + sidecar lifecycle)
-3. **.NET 8 console app** in `processor/BatchFnr/` — the AutoCAD sidecar
+3. **.NET 10 console app** in `processor/BatchFnr/` — the AutoCAD sidecar
 
 Read `AGENTS.md` at the repo root before proposing structural changes.
 
