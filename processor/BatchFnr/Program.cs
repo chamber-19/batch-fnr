@@ -1,3 +1,5 @@
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace BatchFnr;
@@ -18,6 +20,16 @@ public static class Program
 
     public static int Main(string[] _)
     {
+        string? acadDir = AutoCadAssemblyResolver.Install();
+        if (acadDir is null)
+        {
+            Console.Error.WriteLine("ERROR: No supported AutoCAD installation found.");
+            Console.Error.WriteLine("BatchFnr requires AutoCAD 2025, 2026, or 2027.");
+            Console.Error.WriteLine(@"Searched: C:\Program Files\Autodesk\AutoCAD <year>\");
+            return 2;
+        }
+        Console.Error.WriteLine($"BatchFnr resolved AutoCAD install: {acadDir}");
+
         // Force UTF-8 on stdin/stdout so unicode in DWG text round-trips
         // unchanged regardless of the parent's console code page.
         Console.InputEncoding = new System.Text.UTF8Encoding(false);
@@ -140,4 +152,49 @@ public static class Program
         stdout.WriteLine(JsonSerializer.Serialize(payload, JsonOpts));
         stdout.Flush();
     }
+}
+
+internal static class AutoCadAssemblyResolver
+{
+    private static readonly string[] SupportedVersions = ["2027", "2026", "2025"];
+    private static readonly HashSet<string> ManagedAssemblies = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "acdbmgd",
+        "accoremgd",
+        "acmgd",
+        "accui",
+    };
+
+    private static string? _resolvedAcadDir;
+
+    public static string? Install()
+    {
+        _resolvedAcadDir = SupportedVersions
+            .Select(version => $@"C:\Program Files\Autodesk\AutoCAD {version}")
+            .FirstOrDefault(Directory.Exists);
+
+        if (_resolvedAcadDir is null)
+            return null;
+
+        SetDllDirectory(_resolvedAcadDir);
+        AppDomain.CurrentDomain.AssemblyResolve += ResolveManagedAssembly;
+        return _resolvedAcadDir;
+    }
+
+    private static Assembly? ResolveManagedAssembly(object? _, ResolveEventArgs args)
+    {
+        if (_resolvedAcadDir is null)
+            return null;
+
+        var assemblyName = new AssemblyName(args.Name).Name;
+        if (assemblyName is null || !ManagedAssemblies.Contains(assemblyName))
+            return null;
+
+        var path = Path.Combine(_resolvedAcadDir, $"{assemblyName}.dll");
+        return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+    }
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetDllDirectory(string lpPathName);
 }

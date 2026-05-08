@@ -7,7 +7,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>BatchFnr</RootNamespace>
     <AssemblyName>BatchFnr</AssemblyName>
-    <!-- Sidecar must run on the same CLR as AutoCAD; do not self-contain. -->
+    <!--
+      BatchFnr runs as a standalone .NET sidecar. AutoCAD managed assemblies
+      are resolved at runtime by AutoCadAssemblyResolver (Program.cs), so this
+      app must remain framework-dependent and must not self-contain.
+    -->
     <SelfContained>false</SelfContained>
     <InvariantGlobalization>true</InvariantGlobalization>
     <!--
@@ -22,17 +26,19 @@
 
   <ItemGroup>
     <!--
-      Private=False is mandatory. These assemblies ship with AutoCAD; copying
-      them to our output directory triggers "mixed-mode assembly" / version
-      conflicts the moment AutoCAD's own copies load alongside ours.
+      Private=False is mandatory. These assemblies ship with AutoCAD and rely
+      on native dependencies in a real install directory. Do not bundle them
+      with the sidecar output; runtime resolution is handled in Program.cs.
       AcadDir is resolved by the version detection ladder in Directory.Build.props.
     -->
     <Reference Include="accoremgd">
       <HintPath>$(AcadDir)\accoremgd.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="acdbmgd">
       <HintPath>$(AcadDir)\acdbmgd.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="acmgd">
@@ -40,6 +46,7 @@
            Editor). Included here with Private=False to match the reference
            pattern and avoid version conflicts if downstream code ever needs it. -->
       <HintPath>$(AcadDir)\acmgd.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
