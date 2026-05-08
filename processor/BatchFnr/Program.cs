@@ -176,7 +176,10 @@ internal static class AutoCadAssemblyResolver
         if (_resolvedAcadDir is null)
             return null;
 
-        SetDllDirectory(_resolvedAcadDir);
+        if (!SetDllDirectory(_resolvedAcadDir))
+        {
+            Console.Error.WriteLine($"WARN: SetDllDirectory failed for '{_resolvedAcadDir}' (Win32={Marshal.GetLastWin32Error()}).");
+        }
         AppDomain.CurrentDomain.AssemblyResolve += ResolveManagedAssembly;
         return _resolvedAcadDir;
     }
