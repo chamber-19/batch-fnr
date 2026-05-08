@@ -59,7 +59,7 @@ fn sidecar_path(app: &AppHandle) -> Result<PathBuf, String> {
         }
     }
 
-    // Dev fallback: ../../processor/BatchFnr/bin/{Debug,Release}/net8.0-windows/<exe>
+    // Dev fallback: ../../processor/BatchFnr/bin/{x64/Debug,x64/Release}/net10.0-windows/<exe>
     // This makes `cargo run` and `tauri dev` work as long as the .NET project
     // has been built once.
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));

@@ -15,9 +15,6 @@
       The Autodesk references are marked Private=False so they are NOT copied to
       the output directory; doing so causes assembly version conflicts at runtime.
     -->
-    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD $(AutoCadVersion)')">C:\Program Files\Autodesk\AutoCAD $(AutoCadVersion)</AcadDir>
-    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD 2027')">C:\Program Files\Autodesk\AutoCAD 2027</AcadDir>
-    <AcadDir Condition="'$(AcadDir)' == '' and Exists('C:\Program Files\Autodesk\AutoCAD 2026')">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
-    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2025</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2027</AcadDir>
   </PropertyGroup>
 </Project>
