@@ -1,94 +1,68 @@
 # Batch Find & Replace
 
-Chamber 19 desktop tool for batch find-and-replace across AutoCAD DWG files.
+Batch Find & Replace is now a stateless backend service for batch text
+replacement across AutoCAD DWG files.
 
-One job. Open a list of drawings, declare a list of `find → replace` pairs,
-preview every match, execute. Done.
+The service exposes HTTP endpoints for:
 
-## Stack
+- Folder scan (`/api/scan-folder`)
+- Preview (`/api/preview`)
+- Execute (`/api/execute`)
+- Health check (`/api/health`)
 
-- **UI** — React 19 + Vite + TypeScript inside a Tauri 2.0 shell
-  (`frontend/`)
-- **DWG processor** — .NET 10 console app using the headless AutoCAD
-  managed API (`processor/`), spawned by Tauri as a sidecar and driven over
-  newline-delimited JSON on stdin/stdout
-- **No Docker, no localhost HTTP, no Python GUI, no COM**
+The backend delegates DWG operations to the existing `.NET 10` sidecar in
+`processor/BatchFnr`, which uses headless AutoCAD APIs.
 
-See [`AGENTS.md`](AGENTS.md) for the full architecture rules and the list
-of features that have been retired.
+## Current architecture
 
-## Build
+- `backend/`: Python FastAPI HTTP service (active)
+- `processor/BatchFnr/`: .NET sidecar with AutoCAD entity processing (active)
+- `frontend/`: legacy Tauri UI code (deprecated, kept for reference only)
 
-Requires:
+This repo no longer ships a standalone desktop shell. Desktop integration is
+handled in Chamber 19 `launcher`.
 
-- .NET 10 SDK and a local AutoCAD install (for `accoremgd.dll` /
-  `acdbmgd.dll`)
-- Rust 1.77+ and the platform Tauri prerequisites
-- Node 20+ and npm
+## Requirements
+
+- Python 3.13+
+- .NET 10 SDK
+- AutoCAD 2025/2026/2027 installed locally
+
+## Local development
 
 ```bash
-# .NET sidecar
+# Build .NET sidecar first
 dotnet build processor/BatchFnr.sln
 
-# Frontend deps
-cd frontend && npm install
+# Install backend dependencies
+python -m pip install -r backend/requirements.txt
+python -m pip install -r backend/requirements-build.txt
 
-# Run the desktop app in development
-npm run tauri dev
-
-# Production bundle
-npm run tauri build
+# Run API
+python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-If your AutoCAD lives somewhere other than the default, the build auto-detects
-the installed version by walking the ladder 2027 → 2026 → 2025. You can also
-override explicitly:
+Open API docs at `http://127.0.0.1:8000/docs`.
+
+## Tests
 
 ```bash
-# Pin to a specific version
-dotnet build processor/BatchFnr.sln -p:AutoCadVersion=2025
-
-# Or point directly at any install directory
-dotnet build processor/BatchFnr.sln -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"
+python -m pytest backend/tests -v
 ```
 
-## Layout
+## Repository layout
 
+```text
+backend/                 FastAPI service (active)
+  app.py                 API routes and validation
+  core/
+    business_logic.py    Sidecar invocation + NDJSON parsing
+    models.py            Request/response models
+    utils.py             File-system helpers
+  tests/
+    test_endpoints.py    API tests
+
+processor/BatchFnr/      .NET AutoCAD sidecar (active)
+
+frontend/                Legacy Tauri app (deprecated)
 ```
-frontend/                React 19 UI (Build → Preview → Results)
-  src/
-    components/          FileList, PairTable, PreviewTable, ResultsSummary, ProgressBar
-    App.tsx              State machine + IPC orchestration
-  src-tauri/
-    src/
-      commands/fnr.rs    preview_replacements / execute_replacements / scan_folder_for_dwg
-      lib.rs, main.rs    Tauri builder
-    tauri.conf.json
-    Cargo.toml
-
-processor/               .NET 10 sidecar
-  BatchFnr.sln
-  Directory.Build.props  AcadDir override
-  BatchFnr/
-    Program.cs           stdin/stdout JSON loop
-    DrawingProcessor.cs  preview + execute, headless Database
-    EntityTraversal.cs   MText / DBText / AttributeReference / Dimension
-    MTextStripper.cs     Explicit (non-regex) MTEXT formatting-code stripper
-    ReplacementEngine.cs Pure find/replace with case + regex flags
-    Models.cs            JSON DTOs
-
-BatchFindAndReplaceV1/   Historical Python reference (do not invoke)
-```
-
-## Sidecar protocol
-
-Stdin (one JSON object per line):
-
-```json
-{"action":"preview","files":["C:/dwg/foo.dwg"],"pairs":[{"find":"25074","replace":"25075","case_sensitive":false,"use_regex":false}]}
-{"action":"execute","files":["C:/dwg/foo.dwg"],"pairs":[ ... ]}
-```
-
-Stdout: one JSON object per line, flushed immediately. `progress` events
-arrive between files during `execute`; the run terminates with
-`{"status":"complete", ...}`.

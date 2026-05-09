@@ -27,6 +27,12 @@ Thumbs.db
 *.log
 logs/
 
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
 # AutoCAD detritus
 *.dwg~
 *.bak
