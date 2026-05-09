@@ -78,3 +78,9 @@ python -m uvicorn backend.app:app       # local backend run
 The .NET build requires AutoCAD's `accoremgd.dll` / `acdbmgd.dll` to be
 resolvable. Override the install path with
 `dotnet build processor/BatchFnr.sln -p:AcadDir="C:\Program Files\Autodesk\AutoCAD 2025"`.
+
+
+<!-- Added by chamber-19-skill-sync — required skill references for this repo's stack -->
+- Read [`docs/skills/AUTOCAD_DOTNET.md`](https://github.com/chamber-19/.github/blob/main/docs/skills/AUTOCAD_DOTNET.md) before any AutoCAD .NET work.
+- Read [`docs/skills/RUST.MD`](https://github.com/chamber-19/.github/blob/main/docs/skills/RUST.MD) before any Rust work.
+- Read [`docs/skills/TAURI.MD`](https://github.com/chamber-19/.github/blob/main/docs/skills/TAURI.MD) before any Tauri work.
