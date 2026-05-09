@@ -96,6 +96,10 @@ fn spawn_sidecar(app: &AppHandle) -> Result<Child, String> {
         r"C:\Program Files\Autodesk\AutoCAD 2025",
     ];
     let existing_path = std::env::var("PATH").unwrap_or_default();
+    let acad_dir: Option<&str> = acad_candidates
+        .iter()
+        .find(|p| std::path::Path::new(p).exists())
+        .copied();
     let extra: String = acad_candidates
         .iter()
         .filter(|p| std::path::Path::new(p).exists())
@@ -108,13 +112,21 @@ fn spawn_sidecar(app: &AppHandle) -> Result<Child, String> {
         format!("{extra};{existing_path}")
     };
 
-    Command::new(&exe)
-        .env("PATH", new_path)
+    let mut cmd = Command::new(&exe);
+    cmd.env("PATH", new_path)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
-        .kill_on_drop(true)
-        .spawn()
+        .kill_on_drop(true);
+
+    // acdb's native core locates support/schema files relative to CWD.
+    // Setting CWD to the AutoCAD install dir prevents the 0xC0000005 AV
+    // inside Database..ctor that occurs when those file opens return null.
+    if let Some(dir) = acad_dir {
+        cmd.current_dir(dir);
+    }
+
+    cmd.spawn()
         .map_err(|e| format!("failed to spawn sidecar `{}`: {e}", exe.display()))
 }
 

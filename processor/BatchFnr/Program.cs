@@ -177,11 +177,20 @@ internal static class AutoCadAssemblyResolver
         if (_resolvedAcadDir is null)
             return null;
 
+        // acdb's native core (acdb27.dll / accore.dll) locates its support
+        // files (schema files, PAT files, licence data) relative to CWD.
+        // Without this, Database..ctor throws a fatal 0xC0000005 (AV) because
+        // it dereferences a null pointer returned from a failed file open.
+        Directory.SetCurrentDirectory(_resolvedAcadDir);
+
+        // SetDllDirectory replaces the CWD entry in the standard search order
+        // with the explicit path, which is enough for most native dependencies.
         if (!SetDllDirectory(_resolvedAcadDir))
         {
             Console.Error.WriteLine(
                 $"WARN: SetDllDirectory failed for '{_resolvedAcadDir}' (Win32={Marshal.GetLastWin32Error()}). Native AutoCAD dependencies may fail to load.");
         }
+
         AppDomain.CurrentDomain.AssemblyResolve += ResolveManagedAssembly;
         return _resolvedAcadDir;
     }

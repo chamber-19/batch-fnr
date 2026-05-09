@@ -21,36 +21,47 @@ public static class DrawingProcessor
     {
         var matches = new List<Match>();
 
-        using var db = new Database(false, true);
-        db.ReadDwgFile(path, FileOpenMode.OpenForReadAndAllShare, allowCPConversion: false, password: null);
-        db.CloseInput(true);
-
-        using var tr = db.TransactionManager.StartTransaction();
-
-        foreach (var hit in EntityTraversal.EnumerateTextBearingEntities(db, tr))
+        try
         {
-            string? current = EntityTraversal.ReadVisibleText(hit.Entity);
-            if (current is null)
-                continue;
+            using var db = new Database(false, true);
+            
+            // Test: does it crash just creating the Database, or during ReadDwgFile?
+            if (!File.Exists(path))
+                throw new FileNotFoundException($"File not found: {path}");
+                
+            db.ReadDwgFile(path, FileOpenMode.OpenForReadAndAllShare, allowCPConversion: false, password: null);
+            db.CloseInput(true);
 
-            string proposed = ReplacementEngine.Apply(current, pairs);
-            if (proposed == current)
-                continue;
+            using var tr = db.TransactionManager.StartTransaction();
 
-            matches.Add(new Match
+            foreach (var hit in EntityTraversal.EnumerateTextBearingEntities(db, tr))
             {
-                File = path,
-                EntityType = EntityTraversal.TypeLabel(hit.Entity),
-                Layer = hit.Entity.Layer ?? string.Empty,
-                CurrentValue = current,
-                ProposedValue = proposed,
-                Space = hit.Space,
-            });
+                string? current = EntityTraversal.ReadVisibleText(hit.Entity);
+                if (current is null)
+                    continue;
+
+                string proposed = ReplacementEngine.Apply(current, pairs);
+                if (proposed == current)
+                    continue;
+
+                matches.Add(new Match
+                {
+                    File = path,
+                    EntityType = EntityTraversal.TypeLabel(hit.Entity),
+                    Layer = hit.Entity.Layer ?? string.Empty,
+                    CurrentValue = current,
+                    ProposedValue = proposed,
+                    Space = hit.Space,
+                });
+            }
+
+            tr.Commit();
+        }
+        catch (System.Exception ex)
+        {
+            throw new System.InvalidOperationException($"Failed to process {Path.GetFileName(path)}: {ex.Message}", ex);
         }
 
-        // Read-only path — no commit is required, but committing a no-op
-        // transaction is cheaper than aborting and avoids an undo record.
-        tr.Commit();
         return matches;
     }
 
