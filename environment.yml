@@ -1,0 +1,9 @@
+name: batch-fnr
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.13
+  - pip
+  - pip:
+      - -r backend/requirements.txt
