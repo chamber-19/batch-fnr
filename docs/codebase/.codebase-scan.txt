@@ -1,0 +1,231 @@
+
+=== DIRECTORY TREE (max depth 3, source files only) ===
+.github
+.github\copilot-instructions.md
+.github\dependabot.yml
+.github\workflows
+.github\workflows\release.yml
+.gitignore
+.pytest_cache
+.pytest_cache\.gitignore
+.pytest_cache\CACHEDIR.TAG
+.pytest_cache\README.md
+.pytest_cache\v
+.pytest_cache\v\cache
+.pytest_cache\v\cache\nodeids
+.pytest_cache\v\cache\stepwise
+.vscode
+.vscode\settings.json
+AGENTS.md
+backend
+backend\__init__.py
+backend\app.py
+backend\core
+backend\core\__init__.py
+backend\core\business_logic.py
+backend\core\models.py
+backend\core\utils.py
+backend\Dockerfile
+backend\README_SIDECAR.md
+backend\requirements-build.txt
+backend\requirements.txt
+backend\tests
+backend\tests\__init__.py
+backend\tests\conftest.py
+backend\tests\test_endpoints.py
+CHANGELOG.md
+docs
+docs\API.md
+docs\codebase
+docs\codebase\.codebase-scan.txt
+docs\codebase\ARCHITECTURE.md
+docs\codebase\CONCERNS.md
+docs\codebase\CONVENTIONS.md
+docs\codebase\INTEGRATIONS.md
+docs\codebase\STACK.md
+docs\codebase\STRUCTURE.md
+docs\codebase\TESTING.md
+docs\DEPLOYMENT.md
+environment.yml
+frontend
+frontend\.gitignore
+frontend\.pytest_cache
+frontend\.pytest_cache\.gitignore
+frontend\.pytest_cache\CACHEDIR.TAG
+frontend\.pytest_cache\README.md
+frontend\.pytest_cache\v
+frontend\.pytest_cache\v\cache
+frontend\index.html
+frontend\package-lock.json
+frontend\package.json
+frontend\README.md
+frontend\src
+frontend\src\App.tsx
+frontend\src\components
+frontend\src\components\FileList.tsx
+frontend\src\components\PairTable.tsx
+frontend\src\components\PreviewTable.tsx
+frontend\src\components\ProgressBar.tsx
+frontend\src\components\ResultsSummary.tsx
+frontend\src\ipc.ts
+frontend\src\main.tsx
+frontend\src\styles
+frontend\src\styles\app.css
+frontend\src\styles\global.css
+frontend\src\types.ts
+frontend\src-tauri
+frontend\src-tauri\.gitignore
+frontend\src-tauri\build.rs
+frontend\src-tauri\capabilities
+frontend\src-tauri\capabilities\default.json
+frontend\src-tauri\Cargo.lock
+frontend\src-tauri\Cargo.toml
+frontend\src-tauri\gen
+frontend\src-tauri\gen\schemas
+frontend\src-tauri\icons
+frontend\src-tauri\icons\128x128.png
+frontend\src-tauri\icons\128x128@2x.png
+frontend\src-tauri\icons\32x32.png
+frontend\src-tauri\icons\64x64.png
+frontend\src-tauri\icons\android
+frontend\src-tauri\icons\batch-fnr-icon.svg
+frontend\src-tauri\icons\icon.icns
+frontend\src-tauri\icons\icon.ico
+frontend\src-tauri\icons\icon.png
+frontend\src-tauri\icons\ios
+frontend\src-tauri\icons\Square107x107Logo.png
+frontend\src-tauri\icons\Square142x142Logo.png
+frontend\src-tauri\icons\Square150x150Logo.png
+frontend\src-tauri\icons\Square284x284Logo.png
+frontend\src-tauri\icons\Square30x30Logo.png
+frontend\src-tauri\icons\Square310x310Logo.png
+frontend\src-tauri\icons\Square44x44Logo.png
+frontend\src-tauri\icons\Square71x71Logo.png
+frontend\src-tauri\icons\Square89x89Logo.png
+frontend\src-tauri\icons\StoreLogo.png
+frontend\src-tauri\README.md
+frontend\src-tauri\src
+frontend\src-tauri\src\commands
+frontend\src-tauri\src\lib.rs
+frontend\src-tauri\src\main.rs
+frontend\src-tauri\tauri.conf.json
+frontend\tsconfig.json
+frontend\tsconfig.node.json
+frontend\tsconfig.node.tsbuildinfo
+frontend\tsconfig.tsbuildinfo
+frontend\vite.config.d.ts
+frontend\vite.config.js
+frontend\vite.config.ts
+processor
+processor\BatchFnr
+processor\BatchFnr\BatchFnr.csproj
+processor\BatchFnr\DrawingProcessor.cs
+processor\BatchFnr\EntityTraversal.cs
+processor\BatchFnr\Models.cs
+processor\BatchFnr\MTextStripper.cs
+processor\BatchFnr\Program.cs
+processor\BatchFnr\ReplacementEngine.cs
+processor\BatchFnr.sln
+processor\Directory.Build.props
+README.md
+
+=== STACK DETECTION (manifest files) ===
+No recognized manifest files found in project root.
+
+=== ENTRY POINTS ===
+No common entry points found. Check 'main' or 'scripts.start' in manifest files above.
+
+=== LINTING AND FORMATTING CONFIG ===
+No linting or formatting config files found in project root.
+
+=== ENVIRONMENT VARIABLE TEMPLATES ===
+No .env.example or .env.template found. Identify required environment variables by searching the code and config for environment variable reads.
+
+=== TODO / FIXME / HACK (production code only, test dirs excluded) ===
+None found.
+
+=== GIT RECENT COMMITS (last 20) ===
+1f2deb3 chore: add environment configuration file
+32d483e chore: add Dependabot configuration
+4b83184 Merge pull request #18 from chamber-19/dependabot/pip/backend/pip-807902bdc1
+7fbaaf7 Merge pull request #19 from chamber-19/auto/sync-copilot-instructions-5f9ff9f
+27b4ed5 chore(instructions): sync Copilot instructions with org skill updates
+e61e291 build(deps): bump the pip group across 1 directory with 2 updates
+88ed991 ci: add backend release workflow with health check
+950c8b2 docs: align repo with backend-first architecture
+31b3fed feat(backend): add FastAPI service and sidecar bridge
+072aab1 fix(processor): harden AutoCAD 2027 sidecar startup
+4c16482 Merge pull request #17 from chamber-19/chore/feat--prepend-AutoCAD-installation-directories-to-sidecar-PATH-for-dependency-resolution
+7e0e7f9 feat: prepend AutoCAD installation directories to sidecar PATH for dependency resolution
+9555a8a Merge pull request #16 from chamber-19/copilot/fix-merge-conflict-autocad-2027
+4234a50 fix: correct sidecar paths for net10.0 x64 build output and AutoCAD 2027
+f1e0be7 Initial plan
+41ecf04 Merge pull request #13 from chamber-19/copilot/fix-autocad-assemblies-runtime
+c7f0c8b chore: clarify resolver diagnostics for AutoCAD search paths
+4c05c17 fix(scan): log SetDllDirectory failure details
+78fe6c4 fix(scan): resolve AutoCAD assemblies at runtime
+9d0782e Initial plan
+
+=== HIGH-CHURN FILES (last 90 days, top 20) ===
+   6 .github/copilot-instructions.md
+   6 processor/BatchFnr/BatchFnr.csproj
+   5 AGENTS.md
+   5 processor/BatchFnr/Program.cs
+   5 frontend/src-tauri/tauri.conf.json
+   4 README.md
+   4 frontend/src-tauri/src/commands/fnr.rs
+   3 processor/BatchFnr/DrawingProcessor.cs
+   2 backend/requirements-build.txt
+   2 backend/requirements.txt
+   2 .gitignore
+   2 frontend/src-tauri/Cargo.toml
+   2 processor/Directory.Build.props
+   2 processor/BatchFnr/EntityTraversal.cs
+   2 frontend/.gitignore
+   2 frontend/src/App.tsx
+   2 frontend/tsconfig.node.tsbuildinfo
+   2 frontend/tsconfig.tsbuildinfo
+   2 frontend/vite.config.d.ts
+   2 frontend/vite.config.js
+
+=== MONOREPO SIGNALS ===
+No monorepo signals detected.
+
+=== CODE METRICS ===
+Total files scanned: 132
+Total lines of code: 9402
+
+Files by language:
+  Other: 100
+  Python: 9
+  TypeScript/React: 7
+  C#: 6
+  Rust: 5
+  TypeScript: 4
+  JavaScript: 1
+
+Top 10 largest files:
+frontend\src-tauri\Cargo.lock: 119.1KB
+frontend\src-tauri\gen\schemas\desktop-schema.json: 117.3KB
+frontend\src-tauri\gen\schemas\windows-schema.json: 117.3KB
+frontend\package-lock.json: 69.0KB
+frontend\src-tauri\gen\schemas\acl-manifests.json: 66.6KB
+frontend\src-tauri\icons\icon.icns: 61.1KB
+frontend\src-tauri\icons\ios\AppIcon-512@2x.png: 21.6KB
+frontend\src-tauri\icons\icon.ico: 11.3KB
+frontend\src\App.tsx: 10.8KB
+frontend\src-tauri\icons\icon.png: 10.3KB
+
+=== CI/CD PIPELINES ===
+CI/CD: GitHub Actions
+
+=== CONTAINERS & ORCHESTRATION ===
+No containerization configs detected.
+
+=== SECURITY & COMPLIANCE ===
+No security configs detected.
+
+=== PERFORMANCE & TESTING ===
+No performance testing configs detected.
+
+=== SCAN COMPLETE ===
