@@ -2,3 +2,4 @@ fastapi==0.136.1
 uvicorn[standard]==0.47.0
 pydantic==2.13.4
 python-multipart==0.0.28
+chamber19-desktop-toolkit @ git+https://github.com/chamber-19/desktop-toolkit@v2.5.0#subdirectory=python
