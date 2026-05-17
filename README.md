@@ -17,7 +17,6 @@ The backend delegates DWG operations to the existing `.NET 10` sidecar in
 
 - `backend/`: Python FastAPI HTTP service (active)
 - `processor/BatchFnr/`: .NET sidecar with AutoCAD entity processing (active)
-- `frontend/`: legacy Tauri UI code (deprecated, kept for reference only)
 
 This repo no longer ships a standalone desktop shell. Desktop integration is
 handled in Chamber 19 `launcher`.
@@ -64,5 +63,4 @@ backend/                 FastAPI service (active)
 
 processor/BatchFnr/      .NET AutoCAD sidecar (active)
 
-frontend/                Legacy Tauri app (deprecated)
 ```
