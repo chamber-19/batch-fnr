@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 
+from backend.core.auth import require_auth
 from backend.core.business_logic import SidecarProtocolError, SidecarRunner
 from backend.core.models import (
     ExecuteRequest,
@@ -14,7 +15,11 @@ from backend.core.utils import find_dwg_files
 SERVICE_NAME = "batch-fnr-backend"
 SERVICE_VERSION = "1.0.0"
 
-app = FastAPI(title="Batch Find and Replace Backend", version=SERVICE_VERSION)
+app = FastAPI(
+    title="Batch Find and Replace Backend",
+    version=SERVICE_VERSION,
+    dependencies=[Depends(require_auth)],
+)
 
 
 def _get_runner() -> SidecarRunner:
