@@ -12,7 +12,6 @@ backend/                  Python FastAPI service (HTTP API)
 processor/                .NET 10 console app — the AutoCAD sidecar
 └── BatchFnr/             Headless Database (no COM, no AutoCAD UI)
 
-frontend/                 Legacy Tauri UI (deprecated, not built/deployed)
 ```
 
 The backend talks to the .NET sidecar over newline-delimited JSON on
